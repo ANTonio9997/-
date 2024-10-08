@@ -1,0 +1,35 @@
+class Person:
+    def __init__(self, name, health=100, mood=100, money=0.0):
+        self.name = name
+        self.health = health
+        self.mood = mood
+        self.money = money
+
+    def __str__(self):
+        return f'=== {self.name} ===\nЗдоров\'я: {self.health}\nНастрій: {self.mood}\nКапітал: {self.money}'
+
+    def change_state(self, health=0, mood=0, money=0.0):
+        self.health += health
+        self.mood += mood
+        self.money += money
+
+        if self.health < 0:
+            raise DeathException(f"{self.name} помер.")
+        if self.mood < 0:
+            raise DepressionException(f"{self.name} впав у депресію.")
+        if self.money < 0:
+            raise BankruptcyException(f"{self.name} збанкрутував.")
+
+    def do(self, action):
+        if type(action) == Work:
+            if self.mood > 90:
+                self.change_state(health=action.health, mood=action.mood, money=action.money * 1.1)
+            else:
+                self.change_state(health=action.health, mood=action.mood, money=action.money)
+        elif type(action) == Rest:
+            if self.health < 40:
+                self.change_state(health=action.health, mood=action.mood * 0.8, money=action.money)
+            else:
+                self.change_state(health=action.health, mood=action.mood, money=action.money)
+        else:
+            self.change_state(health=action.health, mood=action.mood, money=action.money)
