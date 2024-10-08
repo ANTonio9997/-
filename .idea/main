@@ -1,0 +1,27 @@
+if __name__ == "__main__":
+    people = [
+        Person(name='Тарас', money=0, mood=100, health=100),
+        Person(name='Іван', money=50, mood=80, health=90),
+        Person(name='Олена', money=20, mood=70, health=60)
+    ]
+
+    actions = [
+        Work(name='Піти на завод', money=50, mood=-10, health=-5),
+        Rest(name='Сходити в парк', money=0, mood=15, health=3),
+        Action(name='Піти в лікарню', money=-20, mood=-5, health=20)
+    ]
+
+    while people:
+        person = random.choice(people)
+        action = random.choice(actions)
+        print(f"{person.name} виконує дію: {action.name}")
+        try:
+            person.do(action)
+            print(person)
+        except (DeathException, DepressionException, BankruptcyException) as e:
+            print(e)
+            people.remove(person) 
+
+        if not people:
+            print("Усі люди загинули.")
+            break
