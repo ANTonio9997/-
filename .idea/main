@@ -20,13 +20,19 @@ if __name__ == "__main__":
     while people:
         person = random.choice(people)
         action = random.choice(actions)
-        print(f"{person.name} виконує дію: {action.name}")
-        try:
-            person.do(action)
-            print(person)
-        except (Death, Depression, Bankruptcy) as e:
-            print(e)
-            people.remove(person) 
+        print(f"{Person.__name__} виконує дію: {Action.name}")
+
+        person.do(action)
+        print(person)
+
+        if person.death:
+            print(f"{person.name} помер.")
+        if person.depression:
+            print(f"{person.name} впав у депресію.")
+        if person.bankruptcy:
+            print(f"{person.name} збанкрутував.")
+
+            people = [people for people in people if not people.is_to_be_removed()]
 
         if not people:
             print("Усі люди загинули.")
