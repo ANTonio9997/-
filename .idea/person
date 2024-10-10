@@ -1,9 +1,15 @@
+from work import Work
+from rest import Rest
+
 class Person:
-    def __init__(self, name, health=100, mood=100, money=0.0):
+    def __init__(self, name, health=100, state=100, money=0.0):
         self.name = name
         self.health = health
         self.state = state
         self.money = money
+        self.death = False
+        self.depression = False
+        self.bankruptcy = False
 
     def __str__(self):
         return f'=== {self.name} ===\nЗдоров\'я: {self.health}\nНастрій: {self.state}\nКапітал: {self.money}'
@@ -14,22 +20,14 @@ class Person:
         self.money += money
 
         if self.health < 0:
-            raise DeathException(f"{self.name} помер.")
-        if self.mood < 0:
-            raise DepressionException(f"{self.name} впав у депресію.")
+            self.death = True
+            print(f"{self.name} помер.")
+        if self.state < 0:
+            self.depression = True
+            print(f"{self.name} впав у депресію.")
         if self.money < 0:
-            raise BankruptcyException(f"{self.name} збанкрутував.")
+            self.bankruptcy = True
+            print(f"{self.name} збанкрутував.")
 
-    def do(self, action):
-        if type(action) == Work:
-            if self.state > 90:
-                self.change_state(health=action.health, state=action.state, money=action.money * 1.1)
-            else:
-                self.change_state(health=action.health, state=action.state, money=action.money)
-        elif type(action) == Rest:
-            if self.health < 40:
-                self.change_state(health=action.health, state=action.state * 0.8, money=action.money)
-            else:
-                self.change_state(health=action.health, state=action.state, money=action.money)
-        else:
-            self.change_state(health=action.health, state=action.state, money=action.money)
+    def is_to_be_removed(self):
+        return self.death or self.depression or self.bankruptcy
