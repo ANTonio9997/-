@@ -1,14 +1,20 @@
+import random
+from person import Person
+from action import Action
+from work import Work
+from rest import Rest
+
 if __name__ == "__main__":
     people = [
-        Person(name='Тарас', money=0, mood=100, health=100),
-        Person(name='Іван', money=50, mood=80, health=90),
-        Person(name='Олена', money=20, mood=70, health=60)
+        Person(name='Тарас', money=0, state=100, health=100),
+        Person(name='Іван', money=50, state=80, health=90),
+        Person(name='Олена', money=20, state=70, health=60)
     ]
 
     actions = [
-        Work(name='Піти на завод', money=50, mood=-10, health=-5),
-        Rest(name='Сходити в парк', money=0, mood=15, health=3),
-        Action(name='Піти в лікарню', money=-20, mood=-5, health=20)
+        Work(name='Піти на завод', money=50, state=-10, health=-5),
+        Rest(name='Сходити в парк', money=0, state=15, health=3),
+        Action(name='Піти в лікарню', money=-20, state=-5, health=20)
     ]
 
     while people:
@@ -18,7 +24,7 @@ if __name__ == "__main__":
         try:
             person.do(action)
             print(person)
-        except (DeathException, DepressionException, BankruptcyException) as e:
+        except (Death, Depression, Bankruptcy) as e:
             print(e)
             people.remove(person) 
 
