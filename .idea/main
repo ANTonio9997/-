@@ -12,9 +12,9 @@ if __name__ == "__main__":
     ]
 
     actions = [
-        Work(name='Піти на завод', money=50, state=-10, health=-5),
-        Rest(name='Сходити в парк', money=0, state=15, health=3),
-        Action(name='Піти в лікарню', money=-20, state=-5, health=20)
+        Work('Піти на завод', 50, -10, -5),
+        Rest('Сходити в парк', 0, 15, 3),
+        Action('Піти в лікарню', -20, -5, 20)
     ]
 
     while people:
